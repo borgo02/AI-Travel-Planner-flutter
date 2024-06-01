@@ -12,13 +12,13 @@ class UserRepository extends BaseRepository {
   final CollectionReference usersCollectionRef = FirebaseFirestore.instance.collection('users');
   final CollectionReference travelsCollectionReference = FirebaseFirestore.instance.collection('travels');
 
-  User? getUser() {
-    return currentUser;
+  User getUser() {
+    return currentUser!;
   }
 
-  void updateUser(User newUser) {
+  Future<void> updateUser(User newUser) async {
     currentUser = newUser;
-    setUser(newUser);
+    await setUser(newUser);
   }
 
   Future<void> setUser(User user) async {
