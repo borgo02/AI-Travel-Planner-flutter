@@ -4,6 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginActivity extends StatefulWidget {
+  final String title;
+
+  const LoginActivity({super.key, required this.title});
+
   @override
   _LoginActivityState createState() => _LoginActivityState();
 }
@@ -65,7 +69,7 @@ class _LoginActivityState extends State<LoginActivity> {
         // Handle user initialization logic here
         // For now, just navigate to main screen
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginScreen(title: "Title", user: user,)),
+          MaterialPageRoute(builder: (context) => LoginScreen(title: widget.title, user: user,)),
         );
       }
     } catch (error) {
