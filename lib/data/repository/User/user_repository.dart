@@ -111,14 +111,14 @@ class UserRepository extends BaseRepository {
 
     for (final doc in users.docs) {
       final idUser = doc.id;
-      final userData = await getUserById(idUser);
+      final userData = await getUserById(idUser: idUser);
       if (userData != null) userList.add(userData);
     }
 
     return userList;
   }
 
-  Future<User?> getUserById(String idUser, {bool isCurrentUser = false}) async {
+  Future<User?> getUserById({required String idUser, bool isCurrentUser = false}) async {
     final userDoc = await usersCollectionRef.doc(idUser).get();
     List<Likes>? likedTravelList;
 
@@ -150,7 +150,7 @@ class UserRepository extends BaseRepository {
       final idUserReferencePath = travelRef.get('idUser').path;
       final idUser = idUserReferencePath.split('/').last;
       final userRef = await db.collection('users').doc(idUser).get();
-      if (userRef.exists) return getUserById(idUser);
+      if (userRef.exists) return getUserById(idUser: idUser);
     }
     return null;
   }

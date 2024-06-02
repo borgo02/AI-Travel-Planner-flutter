@@ -1,7 +1,11 @@
+import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
+import 'package:ai_travel_planner/ui/interests/interests_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'interests/interests_view.dart';
 
 class LoginActivity extends StatefulWidget {
   final String title;
@@ -15,6 +19,7 @@ class LoginActivity extends StatefulWidget {
 class _LoginActivityState extends State<LoginActivity> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  var userRepository = UserRepository();
 
   bool isLoading = false;
 
@@ -64,13 +69,21 @@ class _LoginActivityState extends State<LoginActivity> {
         );
         final UserCredential authResult =
         await _auth.signInWithCredential(credential);
-        final User? user = authResult.user;
+        final User user = authResult.user!;
+        var dbUser = await userRepository.getUserById(idUser: user.uid, isCurrentUser: true);
 
-        // Handle user initialization logic here
-        // For now, just navigate to main screen
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginScreen(title: widget.title, user: user,)),
-        );
+        if (dbUser!.isInitialized)
+          {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
+            );
+          }
+        else
+          {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
+            );
+          }
       }
     } catch (error) {
       setState(() {
