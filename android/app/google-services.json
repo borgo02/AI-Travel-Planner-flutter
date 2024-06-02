@@ -7,12 +7,60 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:359954007543:android:8d967e558ff3e616acdaf2",
+        "mobilesdk_app_id": "1:359954007543:android:5278ac3ff3ef94b7acdaf2",
         "android_client_info": {
           "package_name": "com.aitravelplanner.ai_travel_planner"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "359954007543-68bnb23kq276ftshamae9r6gfbs2e4a3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aitravelplanner.ai_travel_planner",
+            "certificate_hash": "da61016bb5f899cfe2cc189e4ce45e3c440593e9"
+          }
+        },
+        {
+          "client_id": "359954007543-7snj9tr15c1ua88oojbo77rmvnsf4hoi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aitravelplanner.ai_travel_planner",
+            "certificate_hash": "6a425c8174dc14ed0501efca9c2e80f5caecc054"
+          }
+        },
+        {
+          "client_id": "359954007543-b8dsakm9n3u9spvf7k19nr16a7kubc2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aitravelplanner.ai_travel_planner",
+            "certificate_hash": "f53d1931dd3b5723f2ed29bb6d5926dee55150b9"
+          }
+        },
+        {
+          "client_id": "359954007543-ch6g0oo9aud75akfmp6dg3fbhskr90bm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aitravelplanner.ai_travel_planner",
+            "certificate_hash": "9a8bb86f97bd98e426df5cf36368e74d7cbd3b74"
+          }
+        },
+        {
+          "client_id": "359954007543-i60f6tpddog8fd4c5l59augm6421nu1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aitravelplanner.ai_travel_planner",
+            "certificate_hash": "984b19beb67c9e3ce3ca917532308b7b79be1b6e"
+          }
+        },
+        {
+          "client_id": "359954007543-u3ovivu6sm02c07q1iniukck8aupk6n2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aitravelplanner.ai_travel_planner",
+            "certificate_hash": "b699f83f2bc1a33d4706b33a1b36d7710a41f99e"
+          }
+        },
         {
           "client_id": "359954007543-fng9elacp91p4ef35c9u176vobsla7ku.apps.googleusercontent.com",
           "client_type": 3
@@ -45,7 +93,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:359954007543:android:801c453814d2bb7aacdaf2",
         "android_client_info": {
-          "package_name": "com.example.aitravelplanner.ai_travel_planner"
+          "package_name": "com.example.aitravelplanner"
         }
       },
       "oauth_client": [
@@ -53,7 +101,7 @@
           "client_id": "359954007543-2qkdh4n5s3hhjbog8egsjevlt8hkhvgj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aitravelplanner.ai_travel_planner",
+            "package_name": "com.example.aitravelplanner",
             "certificate_hash": "da61016bb5f899cfe2cc189e4ce45e3c440593e9"
           }
         },
@@ -61,7 +109,7 @@
           "client_id": "359954007543-4b3qaheq9ek4d13plgb5lbpu0ben1987.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aitravelplanner.ai_travel_planner",
+            "package_name": "com.example.aitravelplanner",
             "certificate_hash": "b699f83f2bc1a33d4706b33a1b36d7710a41f99e"
           }
         },
@@ -69,7 +117,7 @@
           "client_id": "359954007543-eus3fbljuktqvtpknjorscnhk9ilqtm3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aitravelplanner.ai_travel_planner",
+            "package_name": "com.example.aitravelplanner",
             "certificate_hash": "984b19beb67c9e3ce3ca917532308b7b79be1b6e"
           }
         },
@@ -77,7 +125,7 @@
           "client_id": "359954007543-gnrmlbudegqqd9p2dhf7avd639j6sv07.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aitravelplanner.ai_travel_planner",
+            "package_name": "com.example.aitravelplanner",
             "certificate_hash": "f53d1931dd3b5723f2ed29bb6d5926dee55150b9"
           }
         },
@@ -85,7 +133,7 @@
           "client_id": "359954007543-ng1i7e5asdknt26pmveqpn3s4vj4bi3k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aitravelplanner.ai_travel_planner",
+            "package_name": "com.example.aitravelplanner",
             "certificate_hash": "6a425c8174dc14ed0501efca9c2e80f5caecc054"
           }
         },
@@ -93,7 +141,7 @@
           "client_id": "359954007543-ovfnprp88oc7ajkqc71tvrf7e7oarepk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.aitravelplanner.ai_travel_planner",
+            "package_name": "com.example.aitravelplanner",
             "certificate_hash": "9a8bb86f97bd98e426df5cf36368e74d7cbd3b74"
           }
         },

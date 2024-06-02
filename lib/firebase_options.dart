@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCyKXYJ-owDTDlkYatWmAjqyDH4H-osRV0',
-    appId: '1:359954007543:android:8d967e558ff3e616acdaf2',
+    appId: '1:359954007543:android:5278ac3ff3ef94b7acdaf2',
     messagingSenderId: '359954007543',
     projectId: 'aitravelplanner-72fed',
     storageBucket: 'aitravelplanner-72fed.appspot.com',
