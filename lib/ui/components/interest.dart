@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as slider;
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class InterestComponent extends StatelessWidget {
-  final ImageProvider imageSrc;
+  final String imageSrc;
   final String labelText;
   final double sliderValue;
   final ValueChanged<double>? onSliderChanged;
@@ -31,9 +33,10 @@ class InterestComponent extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image(
-                    image: imageSrc,
+                  child: SvgPicture.asset(
+                    imageSrc, // Replace 'assets/image.svg' with the path to your SVG file
                     height: 39,
+                    width: 39,
                   ),
                 ),
                 Text(

@@ -16,7 +16,7 @@ class InterestsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             InterestComponent(
-              imageSrc: const AssetImage('assets/interest_story.png'),
+              imageSrc: 'assets/interests/interest_story.xml',
               labelText: 'Storia',
               sliderValue: viewModel.storyValue,
               onSliderChanged: (value) {
@@ -24,7 +24,7 @@ class InterestsView extends StatelessWidget {
               },
             ),
             InterestComponent(
-              imageSrc: const AssetImage('assets/interest_art.png'),
+              imageSrc: 'assets/interests/interest_art.xml',
               labelText: 'Arte e Cultura',
               sliderValue: viewModel.artValue,
               onSliderChanged: (value) {
@@ -32,7 +32,7 @@ class InterestsView extends StatelessWidget {
               },
             ),
             InterestComponent(
-              imageSrc: const AssetImage('assets/interest_party.png'),
+              imageSrc: 'assets/interests/interest_party.xml',
               labelText: 'Party',
               sliderValue: viewModel.partyValue,
               onSliderChanged: (value) {
@@ -40,7 +40,7 @@ class InterestsView extends StatelessWidget {
               },
             ),
             InterestComponent(
-              imageSrc: const AssetImage('assets/interest_nature.png'),
+              imageSrc: 'assets/interests/interest_nature.xml',
               labelText: 'Natura',
               sliderValue: viewModel.natureValue,
               onSliderChanged: (value) {
@@ -48,7 +48,7 @@ class InterestsView extends StatelessWidget {
               },
             ),
             InterestComponent(
-              imageSrc: const AssetImage('assets/interest_entertainment.png'),
+              imageSrc: 'assets/interests/interest_entertainment.xml',
               labelText: 'Intrattenimento',
               sliderValue: viewModel.entertainmentValue,
               onSliderChanged: (value) {
@@ -56,7 +56,7 @@ class InterestsView extends StatelessWidget {
               },
             ),
             InterestComponent(
-              imageSrc: const AssetImage('assets/interest_sport.png'),
+              imageSrc: 'assets/interests/interest_sport.xml',
               labelText: 'Sport',
               sliderValue: viewModel.sportValue,
               onSliderChanged: (value) {
@@ -64,7 +64,7 @@ class InterestsView extends StatelessWidget {
               },
             ),
             InterestComponent(
-              imageSrc: const AssetImage('assets/interest_Shopping.png'),
+              imageSrc: 'assets/interests/interest_Shopping.xml',
               labelText: 'Shopping',
               sliderValue: viewModel.shoppingValue,
               onSliderChanged: (value) {
