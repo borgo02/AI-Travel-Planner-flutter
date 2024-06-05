@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../model/likes.dart';
 import '../../model/travel.dart';
-import '../../model/user.dart';
+import '../../model/user_model.dart';
 import '../base_repository.dart';
 import '../Travel/travel_repository.dart';
 
@@ -126,7 +126,13 @@ class UserRepository extends BaseRepository {
       final email = userDoc.get('email');
       final isInit = userDoc.get('initialized');
       final fullname = userDoc.get('fullname');
-      final interests = userDoc.get('interests') as Map<String, double>;
+      final data = userDoc.get('interests');
+      Map<String, double> interests = {};
+      data.forEach((key, value) {
+        if (value is double) {
+          interests[key] = value;
+        }
+      });
       likedTravelList = await getLikesByUser(idUser);
       final user = User(
         idUser: idUser,

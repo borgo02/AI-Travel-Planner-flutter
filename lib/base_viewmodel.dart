@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'data/model/User.dart';
+import 'package:ai_travel_planner/data/model/user_model.dart';
 import 'data/repository/User/user_repository.dart';
 
 
@@ -10,7 +10,7 @@ class BaseViewModel extends ChangeNotifier {
   bool isNavigating = false;
 
   BaseViewModel() {
-    currentUser = userRepository.getUser() as User;
+    currentUser = userRepository.getUser();
   }
 
   bool get isLoading => _isLoading;

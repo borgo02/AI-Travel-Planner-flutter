@@ -24,6 +24,22 @@ class _LoginActivityState extends State<LoginActivity> {
   bool isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (_auth.currentUser != null)
+      {
+        setState(() {
+          isLoading = true;
+        });
+        _handleLoginNavigation(_auth.currentUser!);
+        setState(() {
+          isLoading = false;
+        });
+      }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -70,20 +86,7 @@ class _LoginActivityState extends State<LoginActivity> {
         final UserCredential authResult =
         await _auth.signInWithCredential(credential);
         final User user = authResult.user!;
-        var dbUser = await userRepository.getUserById(idUser: user.uid, isCurrentUser: true);
-
-        if (dbUser!.isInitialized)
-          {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
-            );
-          }
-        else
-          {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
-            );
-          }
+        await _handleLoginNavigation(user);
       }
     } catch (error) {
       setState(() {
@@ -95,6 +98,24 @@ class _LoginActivityState extends State<LoginActivity> {
         SnackBar(
           content: Text('Authentication failed. Please try again.'),
         ),
+      );
+    }
+  }
+
+  Future<void> _handleLoginNavigation(User user) async
+  {
+    var dbUser = await userRepository.getUserById(idUser: user.uid, isCurrentUser: true);
+
+    if (dbUser!.isInitialized)
+    {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
+      );
+    }
+    else
+    {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
       );
     }
   }

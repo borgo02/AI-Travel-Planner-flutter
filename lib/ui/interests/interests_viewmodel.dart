@@ -1,5 +1,5 @@
 import 'package:ai_travel_planner/base_viewmodel.dart';
-import 'package:ai_travel_planner/data/model/user.dart';
+import 'package:ai_travel_planner/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class InterestsViewModel extends BaseViewModel {
