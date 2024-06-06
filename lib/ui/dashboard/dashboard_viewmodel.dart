@@ -5,7 +5,7 @@ import 'package:ai_travel_planner/data/model/travel.dart';
 import '../../data/model/user_model.dart';
 
 
-class DashboardViewModel extends BaseViewModel {
+class DashboardViewModel extends ChangeNotifier {
   List<Travel> notSharedTravels = [];
   List<Travel> sharedTravels = [];
 
