@@ -17,7 +17,7 @@ class _TravelCardState extends State<TravelCard> {
   @override
   void initState() {
     super.initState();
-    isLiked = widget.travel.isLiked ?? false;
+    isLiked = widget.travel.isLiked;
   }
 
   @override
