@@ -43,8 +43,8 @@ class InterestsViewModel extends BaseViewModel {
       'shopping': shoppingValue,
     };
 
-    currentUser.interests = interestEntity;
-    currentUser.isInitialized = true;
+    currentUser!.interests = interestEntity;
+    currentUser!.isInitialized = true;
     await userRepository.updateUser(currentUser as User);
 
     //Navigator.of(context).pop();

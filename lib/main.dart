@@ -1,5 +1,7 @@
+import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 import 'package:ai_travel_planner/ui/dashboard/dashboard_view.dart';
 import 'package:ai_travel_planner/ui/login_view.dart';
+import 'package:ai_travel_planner/ui/profile/profile_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static final TravelRepository travelRepository = TravelRepository();
+  static final UserRepository userRepository = UserRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
         useMaterial3: true,
       ),
-      home: DashboardPage(travelRepository: travelRepository,),
+      home: const DashboardFragment(),
     );
   }
 }
