@@ -8,9 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'interests/interests_view.dart';
 
 class LoginActivity extends StatefulWidget {
-  final String title;
 
-  const LoginActivity({super.key, required this.title});
+  const LoginActivity({super.key});
 
   @override
   _LoginActivityState createState() => _LoginActivityState();

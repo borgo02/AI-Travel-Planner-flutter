@@ -32,7 +32,7 @@ class Travel {
       idUser: json['idUser'] as String?,
       info: json['info'] as String?,
       name: json['name'] as String?,
-      isShared: json['isShared'] as bool?,
+      isShared: json['shared'] as bool?,
       timestamp: (json['timestamp'] as Timestamp?)?.toDate(),
       numberOfLikes: json['numberOfLikes'] as int?,
       imageUrl: json['imageUrl'] as String?,
