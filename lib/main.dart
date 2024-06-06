@@ -1,3 +1,4 @@
+import 'package:ai_travel_planner/ui/dashboard/dashboard_view.dart';
 import 'package:ai_travel_planner/ui/login_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
         useMaterial3: true,
       ),
-      home: const LoginActivity()
+      home: DashboardPage(travelRepository: travelRepository,),
     );
   }
 }
