@@ -5,6 +5,7 @@ import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
 import '../../data/model/stage.dart';
 import '../../data/model/user_model.dart';
+import '../travel_viewmodel.dart';
 
 class TravelDetails extends StatelessWidget {
   final Travel travel;

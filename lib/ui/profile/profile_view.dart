@@ -3,16 +3,18 @@ import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/ui/components/travel_card.dart';
 import 'package:ai_travel_planner/CustomColors.dart';
+
 import '../../data/model/user_model.dart';
 import '../Travel/travel_details.dart';
 
 class ProfileFragment extends StatelessWidget {
-  const ProfileFragment({Key? key}) : super(key: key);
+  final TravelViewModel travelViewModel;
+  const ProfileFragment(this.travelViewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TravelViewModel(),
+    return ChangeNotifierProvider<TravelViewModel>.value(
+      value: travelViewModel,
       child: Container(
         color: CustomColors.lightBlue,
         child: Scaffold(
@@ -36,8 +38,8 @@ class ProfileFragment extends StatelessWidget {
             ),
           ),
           body: Consumer<TravelViewModel>(
-            builder: (context, viewModel, child) {
-              return viewModel.isLoading
+            builder: (context, travelViewModel, child) {
+              return travelViewModel.isLoading
                   ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -86,19 +88,19 @@ class ProfileFragment extends StatelessWidget {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: viewModel.notSharedTravels.length,
+                        itemCount: travelViewModel.notSharedTravels.length,
                         itemBuilder: (context, index) {
-                          final travel = viewModel.notSharedTravels[index];
+                          final travel = travelViewModel.notSharedTravels[index];
                           return GestureDetector(
                             onTap: () async {
-                              final ownerUser = await viewModel.getOwnerUser(travel);
+                              final ownerUser = await travelViewModel.getOwnerUser(travel);
                               if (ownerUser != null) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => TravelDetails(
                                       travel: travel,
-                                      travelViewModel: viewModel,
+                                      travelViewModel: travelViewModel,
                                       ownerUser: ownerUser,
                                       view: "profile"
                                     ),
@@ -107,7 +109,7 @@ class ProfileFragment extends StatelessWidget {
                               }
                             },
                             child: FutureBuilder<User?>(
-                              future: viewModel.getOwnerUser(travel),
+                              future: travelViewModel.getOwnerUser(travel),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                   return const Text(
@@ -121,7 +123,7 @@ class ProfileFragment extends StatelessWidget {
                                     ownerUser: ownerUser,
                                     icon: Icons.share,
                                     onIconTap: () {
-                                      viewModel.shareTravel(travel);
+                                      travelViewModel.shareTravel(travel);
                                     },
                                     onLikeTap: null,
                                     showOwnerName: false,

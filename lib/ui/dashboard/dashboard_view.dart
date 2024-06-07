@@ -8,7 +8,7 @@ import '../components/travel_card.dart';
 
 class DashboardFragment extends StatelessWidget {
   final TravelViewModel travelViewModel;
-  const DashboardFragment(this.travelViewModel, {super.key});
+  const DashboardFragment(this.travelViewModel,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class DashboardFragment extends StatelessWidget {
                             horizontal: 10.0,
                           ),
                         ),
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: CustomColors.darkBlue),
                       ),
                     ),
                   ],
