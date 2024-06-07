@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ai_travel_planner/ui/dashboard/dashboard_viewmodel.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
 import 'package:ai_travel_planner/CustomColors.dart';
-
 import '../../data/model/stage.dart';
+import '../travel_viewmodel.dart';
 
 class TravelDetails extends StatelessWidget {
   final Travel travel;
@@ -30,9 +29,9 @@ class TravelDetails extends StatelessWidget {
         ),
       ),
       body: ChangeNotifierProvider(
-        create: (_) => DashboardViewModel(),
+        create: (_) => TravelViewModel(),
         child: SingleChildScrollView(
-          child: Consumer<DashboardViewModel>(
+          child: Consumer<TravelViewModel>(
             builder: (context, viewModel, child) {
               return FutureBuilder(
                 future: viewModel.getStagesByTravel(travel),
