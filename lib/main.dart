@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: Consumer<TravelViewModel>(
-          builder: (context, viewModel, child) {
-            return const ProfileFragment();
+          builder: (context, travelViewModel, child) {
+            return DashboardFragment(travelViewModel);
           },
         ),
       ),

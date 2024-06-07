@@ -53,26 +53,26 @@ class DashboardFragment extends StatelessWidget {
           ),
         ),
         body: Consumer<TravelViewModel>(
-          builder: (context, viewModel, child) {
+          builder: (context, travelViewModel, child) {
             return Center(
-              child: viewModel.isLoading
+              child: travelViewModel.isLoading
                   ? const CircularProgressIndicator()
                   : Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 color: CustomColors.lightBlue,
                 child: ListView.builder(
-                  itemCount: viewModel.sharedTravels.length,
+                  itemCount: travelViewModel.sharedTravels.length,
                   itemBuilder: (context, index) {
-                    final travel = viewModel.sharedTravels[index];
+                    final travel = travelViewModel.sharedTravels[index];
                     return GestureDetector(
                       onTap: () async {
-                        User? ownerUser = await viewModel.getOwnerUser(travel);
+                        User? ownerUser = await travelViewModel.getOwnerUser(travel);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => TravelDetails(
                                 travel: travel,
-                                travelViewModel: viewModel,
+                                travelViewModel: travelViewModel,
                                 ownerUser: ownerUser,
                                 view: "dashboard"
                             ),
@@ -80,7 +80,7 @@ class DashboardFragment extends StatelessWidget {
                         );
                       },
                       child: FutureBuilder<User?>(
-                        future: viewModel.getOwnerUser(travel),
+                        future: travelViewModel.getOwnerUser(travel),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             return const Text('Error loading user');
@@ -90,7 +90,7 @@ class DashboardFragment extends StatelessWidget {
                               user: null,
                               ownerUser: snapshot.data,
                               onLikeTap: () {
-                                viewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
+                                travelViewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
                               },
                               showOwnerName: true,
                               showLikes: true,
