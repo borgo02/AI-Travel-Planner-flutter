@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/ui/components/travel_card.dart';
 import 'package:ai_travel_planner/CustomColors.dart';
+import '../../data/model/user_model.dart';
 import '../Travel/travel_details.dart';
 
 class ProfileFragment extends StatelessWidget {
-  const ProfileFragment({Key? key});
+  const ProfileFragment({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ProfileFragment extends StatelessWidget {
             elevation: 0,
             title: const Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
+              children: const [
                 Spacer(),
                 Text(
                   'Profilo utente',
@@ -51,12 +52,13 @@ class ProfileFragment extends StatelessWidget {
                         child: Row(
                           children: [
                             CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png"),
+                              backgroundImage: const NetworkImage(
+                                "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png",
+                              ),
                               radius: 30.0,
                             ),
-                            SizedBox(width: 10.0),
-                            Text(
+                            const SizedBox(width: 10.0),
+                            const Text(
                               'Nome utente',
                               style: TextStyle(
                                 color: CustomColors.darkBlue,
@@ -64,9 +66,9 @@ class ProfileFragment extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Row(
-                              children: [
+                              children: const [
                                 Icon(Icons.logout),
                                 SizedBox(width: 10.0),
                                 Text(
@@ -88,25 +90,45 @@ class ProfileFragment extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final travel = viewModel.notSharedTravels[index];
                           return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TravelDetails(travel: travel),
-                                ),
-                              );
+                            onTap: () async {
+                              final ownerUser = await viewModel.getOwnerUser(travel);
+                              if (ownerUser != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TravelDetails(
+                                      travel: travel,
+                                      travelViewModel: viewModel,
+                                      ownerUser: ownerUser,
+                                      view: "profile"
+                                    ),
+                                  ),
+                                );
+                              }
                             },
-                            child: TravelCard(
-                              travel: travel,
-                              user: null,
-                              ownerUser: null,
-                              icon: Icons.share,
-                              onIconTap: () {
-                                viewModel.shareTravel(travel);
+                            child: FutureBuilder<User?>(
+                              future: viewModel.getOwnerUser(travel),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return const Text(
+                                    ''
+                                  );
+                                } else {
+                                  final ownerUser = snapshot.data;
+                                  return TravelCard(
+                                    travel: travel,
+                                    user: null,
+                                    ownerUser: ownerUser,
+                                    icon: Icons.share,
+                                    onIconTap: () {
+                                      viewModel.shareTravel(travel);
+                                    },
+                                    onLikeTap: null,
+                                    showOwnerName: false,
+                                    showLikes: false,
+                                  );
+                                }
                               },
-                              onLikeTap: null,
-                              showOwnerName: false, // Hide owner name in profile
-                              showLikes: false, // Hide likes in profile
                             ),
                           );
                         },

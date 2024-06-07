@@ -7,12 +7,13 @@ import '../Travel/travel_details.dart';
 import '../components/travel_card.dart';
 
 class DashboardFragment extends StatelessWidget {
-  const DashboardFragment({super.key});
+  final TravelViewModel travelViewModel;
+  const DashboardFragment(this.travelViewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TravelViewModel()..loadSharedTravels(),
+    return ChangeNotifierProvider<TravelViewModel>.value(
+      value: travelViewModel,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
@@ -64,33 +65,39 @@ class DashboardFragment extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final travel = viewModel.sharedTravels[index];
                     return GestureDetector(
-                        onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TravelDetails(travel: travel),
-                        ),
-                      );
-                    },
-                    child: FutureBuilder<User?>(
-                      future: viewModel.getOwnerUser(travel),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text('Error loading user');
-                        } else {
-                          return TravelCard(
-                            travel: travel,
-                            user: null,
-                            ownerUser: snapshot.data,
-                            onLikeTap: () {
-                              viewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
-                            },
-                            showOwnerName: true,
-                            showLikes: true,
-                          );
-                        }
+                      onTap: () async {
+                        User? ownerUser = await viewModel.getOwnerUser(travel);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TravelDetails(
+                                travel: travel,
+                                travelViewModel: viewModel,
+                                ownerUser: ownerUser,
+                                view: "dashboard"
+                            ),
+                          ),
+                        );
                       },
-                    ),
+                      child: FutureBuilder<User?>(
+                        future: viewModel.getOwnerUser(travel),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return const Text('Error loading user');
+                          } else {
+                            return TravelCard(
+                              travel: travel,
+                              user: null,
+                              ownerUser: snapshot.data,
+                              onLikeTap: () {
+                                viewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
+                              },
+                              showOwnerName: true,
+                              showLikes: true,
+                            );
+                          }
+                        },
+                      ),
                     );
                   },
                 ),
