@@ -7,8 +7,9 @@ import '../travel_viewmodel.dart';
 
 class TravelDetails extends StatelessWidget {
   final Travel travel;
+  final TravelViewModel travelViewModel;
 
-  const TravelDetails({Key? key, required this.travel}) : super(key: key);
+  const TravelDetails(this.travelViewModel, this.travel, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,15 +3,17 @@ import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/ui/components/travel_card.dart';
 import 'package:ai_travel_planner/CustomColors.dart';
+
 import '../Travel/travel_details.dart';
 
 class ProfileFragment extends StatelessWidget {
-  const ProfileFragment({Key? key});
+  final TravelViewModel travelViewModel;
+  const ProfileFragment(this.travelViewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TravelViewModel(),
+    return ChangeNotifierProvider<TravelViewModel>.value(
+      value: travelViewModel,
       child: Container(
         color: CustomColors.lightBlue,
         child: Scaffold(
@@ -35,8 +37,8 @@ class ProfileFragment extends StatelessWidget {
             ),
           ),
           body: Consumer<TravelViewModel>(
-            builder: (context, viewModel, child) {
-              return viewModel.isLoading
+            builder: (context, travelViewModel, child) {
+              return travelViewModel.isLoading
                   ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -84,15 +86,15 @@ class ProfileFragment extends StatelessWidget {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: viewModel.notSharedTravels.length,
+                        itemCount: travelViewModel.notSharedTravels.length,
                         itemBuilder: (context, index) {
-                          final travel = viewModel.notSharedTravels[index];
+                          final travel = travelViewModel.notSharedTravels[index];
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => TravelDetails(travel: travel),
+                                  builder: (context) => TravelDetails(travelViewModel, travel)
                                 ),
                               );
                             },
@@ -102,7 +104,7 @@ class ProfileFragment extends StatelessWidget {
                               ownerUser: null,
                               icon: Icons.share,
                               onIconTap: () {
-                                viewModel.shareTravel(travel);
+                                travelViewModel.shareTravel(travel);
                               },
                               onLikeTap: null,
                               showOwnerName: false, // Hide owner name in profile

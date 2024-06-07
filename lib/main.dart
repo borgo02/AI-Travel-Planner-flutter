@@ -23,9 +23,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static final TravelRepository travelRepository = TravelRepository();
-  static final UserRepository userRepository = UserRepository();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

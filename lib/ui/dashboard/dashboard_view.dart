@@ -7,12 +7,13 @@ import '../Travel/travel_details.dart';
 import '../components/travel_card.dart';
 
 class DashboardFragment extends StatelessWidget {
-  const DashboardFragment({super.key});
+  final TravelViewModel travelViewModel;
+  const DashboardFragment(this.travelViewModel,{super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TravelViewModel()..loadSharedTravels(),
+    return ChangeNotifierProvider<TravelViewModel>.value(
+      value: travelViewModel,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
@@ -42,7 +43,7 @@ class DashboardFragment extends StatelessWidget {
                             horizontal: 10.0,
                           ),
                         ),
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: CustomColors.darkBlue),
                       ),
                     ),
                   ],
@@ -68,7 +69,7 @@ class DashboardFragment extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TravelDetails(travel: travel),
+                          builder: (context) => TravelDetails(viewModel, travel),
                         ),
                       );
                     },
