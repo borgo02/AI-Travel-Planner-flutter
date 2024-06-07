@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }
@@ -67,13 +67,13 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: CustomColors.paleBlue,
       body: Stack(
         children: [
-        Center(
-          child: _widgetOptions.elementAt(selectedIndex),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: _navVar(),
-        ),
+          Center(
+            child: _widgetOptions.elementAt(selectedIndex),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: _navVar(),
+          ),
         ],
       ),
     );
@@ -139,6 +139,4 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
-
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ai_travel_planner/ui/dashboard/dashboard_viewmodel.dart';
+import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/ui/components/travel_card.dart';
 import 'package:ai_travel_planner/CustomColors.dart';
 import '../Travel/travel_details.dart';
@@ -11,7 +11,7 @@ class ProfileFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => DashboardViewModel(),
+      create: (_) => TravelViewModel(),
       child: Container(
         color: CustomColors.lightBlue,
         child: Scaffold(
@@ -34,7 +34,7 @@ class ProfileFragment extends StatelessWidget {
               ],
             ),
           ),
-          body: Consumer<DashboardViewModel>(
+          body: Consumer<TravelViewModel>(
             builder: (context, viewModel, child) {
               return viewModel.isLoading
                   ? const Center(

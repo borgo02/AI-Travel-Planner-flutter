@@ -2,14 +2,14 @@ import 'package:ai_travel_planner/base_viewmodel.dart';
 import 'package:ai_travel_planner/data/model/stage.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
 
-import '../../data/model/user_model.dart';
+import '../data/model/user_model.dart';
 
 
-class DashboardViewModel extends ChangeNotifier {
+class TravelViewModel extends BaseViewModel {
   List<Travel> notSharedTravels = [];
   List<Travel> sharedTravels = [];
 
-  DashboardViewModel(){
+  TravelViewModel(){
     loadNotSharedTravels();
     loadSharedTravels();
   }
