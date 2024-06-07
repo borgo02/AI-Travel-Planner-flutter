@@ -55,19 +55,64 @@ int selectedIndex = 0;
 
 class _MainPageState extends State<MainPage> {
   static final travelViewModel = TravelViewModel();
+
   static final List<Widget> _widgetOptions = <Widget>[
     DashboardFragment(travelViewModel),
     ProfileFragment(travelViewModel),
   ];
 
-  static final List<Widget> _topBarWidgetOptions = <Widget>[
-    const Text(
-      'Home Page',
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+  static final List<AppBar> _topBarWidgetOptions = <AppBar>[
+    AppBar(
+      toolbarHeight: kToolbarHeight,
+      backgroundColor: CustomColors.darkBlue,
+      elevation: 0,
+      flexibleSpace: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        child: Center(
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Cerca viaggio..',
+                    hintStyle: const TextStyle(color: CustomColors.darkBlue),
+                    prefixIcon: const Icon(Icons.search),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 10.0,
+                    ),
+                  ),
+                  style: const TextStyle(color: CustomColors.darkBlue),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     ),
-    const Text(
-      'Profile Page',
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+    AppBar(
+      toolbarHeight: 56,
+      backgroundColor: CustomColors.darkBlue,
+      elevation: 0,
+      title: const Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Spacer(),
+          Text(
+            'Profilo utente',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
     ),
   ];
 
@@ -75,10 +120,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: _topBarWidgetOptions.elementAt(selectedIndex),
-      ),
       backgroundColor: CustomColors.paleBlue,
+      appBar: _topBarWidgetOptions.elementAt(selectedIndex),
       body: Stack(
         children: [
           Center(

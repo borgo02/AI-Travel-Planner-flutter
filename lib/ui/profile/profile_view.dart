@@ -18,24 +18,6 @@ class ProfileFragment extends StatelessWidget {
         color: CustomColors.lightBlue,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            toolbarHeight: 56,
-            backgroundColor: CustomColors.darkBlue,
-            elevation: 0,
-            title: const Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Spacer(),
-                Text(
-                  'Profilo utente',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-          ),
           body: Consumer<TravelViewModel>(
             builder: (context, travelViewModel, child) {
               return travelViewModel.isLoading

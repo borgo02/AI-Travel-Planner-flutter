@@ -18,6 +18,9 @@ class TravelDetails extends StatelessWidget {
         toolbarHeight: 56,
         backgroundColor: CustomColors.darkBlue,
         elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.white
+        ),
         title: Align(
           alignment: Alignment.centerRight,
           child: Text(

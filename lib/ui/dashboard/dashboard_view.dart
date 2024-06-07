@@ -15,43 +15,6 @@ class DashboardFragment extends StatelessWidget {
     return ChangeNotifierProvider<TravelViewModel>.value(
       value: travelViewModel,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
-          child: AppBar(
-            toolbarHeight: kToolbarHeight,
-            backgroundColor: CustomColors.darkBlue,
-            elevation: 0,
-            flexibleSpace: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Cerca viaggio..',
-                          hintStyle: const TextStyle(color: CustomColors.darkBlue),
-                          prefixIcon: const Icon(Icons.search),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10.0,
-                            horizontal: 10.0,
-                          ),
-                        ),
-                        style: const TextStyle(color: CustomColors.darkBlue),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
         body: Consumer<TravelViewModel>(
           builder: (context, viewModel, child) {
             return Center(
