@@ -14,8 +14,7 @@ class DashboardFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TravelViewModel>.value(
       value: travelViewModel,
-      child: Scaffold(
-        body: Consumer<TravelViewModel>(
+      child: Consumer<TravelViewModel>(
           builder: (context, viewModel, child) {
             return Center(
               child: viewModel.isLoading
@@ -43,6 +42,7 @@ class DashboardFragment extends StatelessWidget {
                           return const Text('Error loading user');
                         } else {
                           return TravelCard(
+                            bottomMargin: index == viewModel.sharedTravels.length - 1 ? 120 : 10,
                             travel: travel,
                             user: null,
                             ownerUser: snapshot.data,
@@ -61,7 +61,6 @@ class DashboardFragment extends StatelessWidget {
               ),
             );
           },
-        ),
       ),
     );
   }

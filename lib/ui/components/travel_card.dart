@@ -12,6 +12,7 @@ class TravelCard extends StatelessWidget {
   final VoidCallback? onLikeTap;
   final bool showOwnerName;
   final bool showLikes;
+  final double bottomMargin;
 
   const TravelCard({
     super.key,
@@ -23,12 +24,13 @@ class TravelCard extends StatelessWidget {
     this.onLikeTap,
     this.showOwnerName = false,
     this.showLikes = true,
+    this.bottomMargin = 10.0
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0).copyWith(bottom: bottomMargin),
       color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),

@@ -14,11 +14,7 @@ class ProfileFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TravelViewModel>.value(
       value: travelViewModel,
-      child: Container(
-        color: CustomColors.lightBlue,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Consumer<TravelViewModel>(
+      child: Consumer<TravelViewModel>(
             builder: (context, travelViewModel, child) {
               return travelViewModel.isLoading
                   ? const Center(
@@ -81,6 +77,7 @@ class ProfileFragment extends StatelessWidget {
                               );
                             },
                             child: TravelCard(
+                              bottomMargin: index == travelViewModel.sharedTravels.length - 1 ? 120 : 10,
                               travel: travel,
                               user: null,
                               ownerUser: null,
@@ -101,8 +98,6 @@ class ProfileFragment extends StatelessWidget {
               );
             },
           ),
-        ),
-      ),
     );
   }
 }

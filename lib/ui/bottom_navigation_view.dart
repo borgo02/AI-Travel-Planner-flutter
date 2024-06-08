@@ -61,8 +61,10 @@ class _MainPageState extends State<MainPage> {
     ProfileFragment(travelViewModel),
   ];
 
-  static final List<AppBar> _topBarWidgetOptions = <AppBar>[
-    AppBar(
+  static final List<PreferredSize> _topBarWidgetOptions = <PreferredSize>[
+    PreferredSize(
+      preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
+      child:AppBar(
       toolbarHeight: kToolbarHeight,
       backgroundColor: CustomColors.darkBlue,
       elevation: 0,
@@ -96,8 +98,11 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     ),
-    AppBar(
-      toolbarHeight: 56,
+          ),
+      PreferredSize(
+      preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
+  child:AppBar(
+      toolbarHeight: kToolbarHeight,
       backgroundColor: CustomColors.darkBlue,
       elevation: 0,
       title: const Row(
@@ -114,12 +119,14 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
     ),
+    ),
   ];
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: CustomColors.paleBlue,
       appBar: _topBarWidgetOptions.elementAt(selectedIndex),
       body: Stack(
