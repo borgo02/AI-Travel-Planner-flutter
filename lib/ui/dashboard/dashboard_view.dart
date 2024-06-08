@@ -1,3 +1,4 @@
+import 'package:ai_travel_planner/ui/travel/travel_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
@@ -29,7 +30,7 @@ class DashboardFragment extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TravelDetails(viewModel, travel),
+                          builder: (context) => TravelDetailsFragment(viewModel, travel),
                         ),
                       );
                     },

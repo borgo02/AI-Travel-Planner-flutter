@@ -1,4 +1,4 @@
-import 'package:ai_travel_planner/CustomColors.dart';
+import 'package:ai_travel_planner/assets/CustomColors.dart';
 import 'package:ai_travel_planner/ui/dashboard/dashboard_view.dart';
 import 'package:ai_travel_planner/ui/profile/profile_view.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';

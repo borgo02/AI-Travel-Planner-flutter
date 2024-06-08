@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ai_travel_planner/CustomColors.dart';
+import 'package:ai_travel_planner/assets/CustomColors.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
 import 'package:ai_travel_planner/data/model/user_model.dart';
 

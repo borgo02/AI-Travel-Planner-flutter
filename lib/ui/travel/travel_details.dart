@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
-import 'package:ai_travel_planner/CustomColors.dart';
+import 'package:ai_travel_planner/assets/CustomColors.dart';
 import '../../data/model/stage.dart';
 import '../travel_viewmodel.dart';
 
-class TravelDetails extends StatelessWidget {
+class TravelDetailsFragment extends StatelessWidget {
   final Travel travel;
   final TravelViewModel travelViewModel;
 
-  const TravelDetails(this.travelViewModel, this.travel, {super.key});
+  const TravelDetailsFragment(this.travelViewModel, this.travel, {super.key});
 
   @override
   Widget build(BuildContext context) {
