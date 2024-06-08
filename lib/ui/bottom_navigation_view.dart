@@ -5,6 +5,7 @@ import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../firebase_options.dart';
 
@@ -55,72 +56,99 @@ int selectedIndex = 0;
 
 class _MainPageState extends State<MainPage> {
   static final travelViewModel = TravelViewModel();
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    searchController.text = travelViewModel.searchText;
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   static final List<Widget> _widgetOptions = <Widget>[
     DashboardFragment(travelViewModel),
     ProfileFragment(travelViewModel),
   ];
 
-  static final List<PreferredSize> _topBarWidgetOptions = <PreferredSize>[
-    PreferredSize(
-      preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
-      child:AppBar(
-      toolbarHeight: kToolbarHeight,
-      backgroundColor: CustomColors.darkBlue,
-      elevation: 0,
-      flexibleSpace: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: Center(
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Cerca viaggio..',
-                    hintStyle: const TextStyle(color: CustomColors.darkBlue),
-                    prefixIcon: const Icon(Icons.search),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10.0,
-                      horizontal: 10.0,
+  List<PreferredSize> get _topBarWidgetOptions {
+    return <PreferredSize>[
+      PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
+        child: AppBar(
+          toolbarHeight: kToolbarHeight,
+          backgroundColor: CustomColors.darkBlue,
+          elevation: 0,
+          flexibleSpace: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: Center(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ChangeNotifierProvider<TravelViewModel>.value(
+                      value: travelViewModel,
+                      child: Consumer<TravelViewModel>(
+                        builder: (context, viewModel, child) {
+                          return TextField(
+                            controller: searchController,
+                            onChanged: (query) {
+                              viewModel.searchTravel(query);
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Cerca viaggio..',
+                              hintStyle: const TextStyle(color: CustomColors.darkBlue),
+                              prefixIcon: const Icon(Icons.search),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10.0,
+                                horizontal: 10.0,
+                              ),
+                            ),
+                            style: const TextStyle(color: CustomColors.darkBlue),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                  style: const TextStyle(color: CustomColors.darkBlue),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
+        child: AppBar(
+          toolbarHeight: kToolbarHeight,
+          backgroundColor: CustomColors.darkBlue,
+          elevation: 0,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Spacer(),
+              Text(
+                'Profilo utente',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
         ),
       ),
-    ),
-          ),
-      PreferredSize(
-      preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
-  child:AppBar(
-      toolbarHeight: kToolbarHeight,
-      backgroundColor: CustomColors.darkBlue,
-      elevation: 0,
-      title: const Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Spacer(),
-          Text(
-            'Profilo utente',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-    ),
-    ),
-  ];
+    ];
+  }
 
 
   @override

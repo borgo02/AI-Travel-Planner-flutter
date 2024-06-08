@@ -55,7 +55,7 @@ class TravelCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 10.0),
                       Text(
-                        ownerUser?.fullname ?? "Nome completo",
+                        ownerUser?.fullname ?? "",
                         style: const TextStyle(
                           color: CustomColors.mediumBlue,
                           fontSize: 14.0,
@@ -79,7 +79,7 @@ class TravelCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  travel.name ?? 'Travel',
+                  travel.name ?? '',
                   style: const TextStyle(
                       color: CustomColors.darkBlue,
                       fontWeight: FontWeight.bold,

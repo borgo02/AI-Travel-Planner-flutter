@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:ai_travel_planner/base_viewmodel.dart';
 import 'package:ai_travel_planner/data/model/stage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
 
 import '../data/model/user_model.dart';
@@ -8,6 +11,8 @@ import '../data/model/user_model.dart';
 class TravelViewModel extends BaseViewModel {
   List<Travel> notSharedTravels = [];
   List<Travel> sharedTravels = [];
+  List<Travel> filteredTravels = [];
+  String searchText = "";
 
   TravelViewModel(){
     loadNotSharedTravels();
@@ -36,6 +41,7 @@ class TravelViewModel extends BaseViewModel {
       print("Error loading shared travels, $e");
     } finally {
       setLoading(false);
+      filteredTravels.addAll(sharedTravels);
       notifyListeners();
     }
   }
@@ -61,9 +67,23 @@ class TravelViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void searchTravel(String query) {
+    searchText = query;
+    if(query!="") {
+      filteredTravels = sharedTravels.where((travel) => travel.name!.toLowerCase().contains(query.toLowerCase())).toList();
+    } else {
+      filteredTravels.clear();
+      filteredTravels.addAll(sharedTravels);
+    }
+    print('Query: $query');
+    print('Filtered travels: $filteredTravels');
+    notifyListeners();
+  }
+
   void shareTravel(Travel travel) {
     notSharedTravels.remove(travel);
     sharedTravels.add(travel);
+    filteredTravels.add(travel);
     travelRepository.setTravelToShared(travel.idTravel!);
     notifyListeners();
   }

@@ -23,9 +23,9 @@ class DashboardFragment extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 color: CustomColors.lightBlue,
                 child: ListView.builder(
-                  itemCount: viewModel.sharedTravels.length,
+                  itemCount: viewModel.filteredTravels.length,
                   itemBuilder: (context, index) {
-                    final travel = viewModel.sharedTravels[index];
+                    final travel = viewModel.filteredTravels[index];
                     return GestureDetector(
                         onTap: () {
                       Navigator.push(
@@ -42,7 +42,7 @@ class DashboardFragment extends StatelessWidget {
                           return const Text('Error loading user');
                         } else {
                           return TravelCard(
-                            bottomMargin: index == viewModel.sharedTravels.length - 1 ? 120 : 10,
+                            bottomMargin: index == viewModel.filteredTravels.length - 1 ? 120 : 10,
                             travel: travel,
                             user: null,
                             ownerUser: snapshot.data,

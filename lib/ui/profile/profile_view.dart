@@ -77,7 +77,7 @@ class ProfileFragment extends StatelessWidget {
                               );
                             },
                             child: TravelCard(
-                              bottomMargin: index == travelViewModel.sharedTravels.length - 1 ? 120 : 10,
+                              bottomMargin: index == travelViewModel.notSharedTravels.length - 1 ? 120 : 10,
                               travel: travel,
                               user: null,
                               ownerUser: null,
