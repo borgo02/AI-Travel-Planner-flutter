@@ -61,7 +61,6 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-
     searchController.text = travelViewModel.searchText;
   }
 
@@ -155,7 +154,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: CustomColors.paleBlue,
+      backgroundColor: CustomColors.lightBlue,
       appBar: _topBarWidgetOptions.elementAt(selectedIndex),
       body: Stack(
         children: [

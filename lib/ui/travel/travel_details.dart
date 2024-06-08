@@ -32,8 +32,8 @@ class TravelDetails extends StatelessWidget {
           ),
         ),
       ),
-      body: ChangeNotifierProvider(
-        create: (_) => TravelViewModel(),
+      body: ChangeNotifierProvider<TravelViewModel>.value(
+        value: travelViewModel,
         child: SingleChildScrollView(
           child: Consumer<TravelViewModel>(
             builder: (context, viewModel, child) {

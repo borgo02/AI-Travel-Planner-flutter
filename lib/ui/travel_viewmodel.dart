@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:ai_travel_planner/base_viewmodel.dart';
 import 'package:ai_travel_planner/data/model/stage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
 
 import '../data/model/user_model.dart';
@@ -83,7 +80,7 @@ class TravelViewModel extends BaseViewModel {
   void shareTravel(Travel travel) {
     notSharedTravels.remove(travel);
     sharedTravels.add(travel);
-    filteredTravels.add(travel);
+    searchTravel(searchText);
     travelRepository.setTravelToShared(travel.idTravel!);
     notifyListeners();
   }

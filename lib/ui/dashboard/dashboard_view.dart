@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ai_travel_planner/CustomColors.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import '../../data/model/user_model.dart';
 import '../Travel/travel_details.dart';
@@ -21,7 +20,6 @@ class DashboardFragment extends StatelessWidget {
                   ? const CircularProgressIndicator()
                   : Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                color: CustomColors.lightBlue,
                 child: ListView.builder(
                   itemCount: viewModel.filteredTravels.length,
                   itemBuilder: (context, index) {
