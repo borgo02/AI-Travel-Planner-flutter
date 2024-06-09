@@ -109,7 +109,7 @@ class TravelDetailsFragment extends StatelessWidget {
                                                 if (view == "profile") {
                                                   travelViewModel.shareTravel(travel);
                                                 } else {
-                                                  travelViewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
+                                                  travelViewModel.toggleLikeStatus(travel, viewModel.currentUser.idUser);
                                                 }
                                               },
                                             )

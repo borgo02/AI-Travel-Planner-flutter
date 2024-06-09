@@ -74,7 +74,7 @@ class ProfileFragment extends StatelessWidget {
                               builder: (context) => TravelDetailsFragment(
                                 travel: travel,
                                 travelViewModel: travelViewModel,
-                                ownerUser: null,
+                                ownerUser: travelViewModel.currentUser,
                                 view: "profile",
                               ),
                             ),
@@ -88,7 +88,7 @@ class ProfileFragment extends StatelessWidget {
                               : 10,
                           travel: travel,
                           user: null,
-                          ownerUser: null,
+                          ownerUser: travelViewModel.currentUser,
                           icon: Icons.share,
                           onIconTap: () {
                             travelViewModel.shareTravel(travel);
