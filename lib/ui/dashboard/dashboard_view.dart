@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import '../../data/model/user_model.dart';
-import '../Travel/travel_details.dart';
 import '../components/travel_card.dart';
 
 class DashboardFragment extends StatelessWidget {

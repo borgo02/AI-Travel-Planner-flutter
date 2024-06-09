@@ -1,16 +1,13 @@
-import 'package:ai_travel_planner/ui/travel/travel_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/ui/components/travel_card.dart';
 import 'package:ai_travel_planner/assets/CustomColors.dart';
-
-import '../../data/model/user_model.dart';
-import '../Travel/travel_details.dart';
+import 'package:ai_travel_planner/ui/travel/travel_details.dart';
 
 class ProfileFragment extends StatelessWidget {
   final TravelViewModel travelViewModel;
-  const ProfileFragment(this.travelViewModel, {Key? key});
+  const ProfileFragment(this.travelViewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +71,10 @@ class ProfileFragment extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => TravelDetailsFragment(
-                                travelViewModel,
-                                travel,
+                                travel: travel,
+                                travelViewModel: travelViewModel,
+                                ownerUser: null,
+                                view: "profile",
                               ),
                             ),
                           );

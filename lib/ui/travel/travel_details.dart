@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
 import 'package:ai_travel_planner/assets/CustomColors.dart';
-import 'package:ai_travel_planner/CustomColors.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
-import 'package:ai_travel_planner/data/model/travel.dart';
 import '../../data/model/stage.dart';
 import '../../data/model/user_model.dart';
-import '../travel_viewmodel.dart';
 
 class TravelDetailsFragment extends StatelessWidget {
   final Travel travel;
