@@ -24,21 +24,21 @@ class ProfileFragment extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(
-                  height: 120.0,
+                SizedBox(
+                  height: 130.0,
                   child: Row(
                     children: [
                       CircleAvatar(
                         backgroundImage: NetworkImage(
                             "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png"),
-                        radius: 30.0,
+                        radius: 25.0,
                       ),
-                      SizedBox(width: 10.0),
+                      SizedBox(width: 15.0),
                       Text(
-                        'Nome utente',
+                        '${travelViewModel.currentUser.fullname}',
                         style: TextStyle(
                           color: CustomColors.darkBlue,
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -59,6 +59,7 @@ class ProfileFragment extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: 30.0),
                 Expanded( // Added Expanded widget
                   child: ListView.builder(
                     itemCount: travelViewModel.notSharedTravels.length,

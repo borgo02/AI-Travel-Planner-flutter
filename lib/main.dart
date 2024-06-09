@@ -1,5 +1,6 @@
 import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 import 'package:ai_travel_planner/ui/dashboard/dashboard_view.dart';
+import 'package:ai_travel_planner/ui/login_view.dart';
 import 'package:ai_travel_planner/ui/profile/profile_view.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,20 +27,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TravelViewModel(),
-      child: MaterialApp(
+    return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
           useMaterial3: true,
         ),
-        home: Consumer<TravelViewModel>(
-          builder: (context, travelViewModel, child) {
-            return DashboardFragment(travelViewModel);
-          },
-        ),
-      ),
+        home: const LoginActivity()
     );
   }
 }

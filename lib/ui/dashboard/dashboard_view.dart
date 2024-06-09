@@ -51,7 +51,7 @@ class DashboardFragment extends StatelessWidget {
                               user: null,
                               ownerUser: snapshot.data,
                               onLikeTap: () {
-                                viewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
+                                viewModel.toggleLikeStatus(travel, viewModel.currentUser.idUser);
                               },
                               showOwnerName: true,
                               showLikes: true,

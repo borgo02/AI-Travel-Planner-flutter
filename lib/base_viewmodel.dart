@@ -6,12 +6,12 @@ import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 class BaseViewModel extends ChangeNotifier {
   final TravelRepository travelRepository = TravelRepository();
   final UserRepository userRepository = UserRepository();
-  User? currentUser;
+  late User currentUser;
   bool _isLoading = false;
   bool isNavigating = false;
 
   BaseViewModel() {
-    //initializeCurrentUser();
+    currentUser = userRepository.getUser();
   }
 
   bool get isLoading => _isLoading;

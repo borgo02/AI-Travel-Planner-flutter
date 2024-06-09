@@ -20,7 +20,7 @@ class TravelViewModel extends BaseViewModel {
     await executeWithLoading(() async {
       try {
         setLoading(true);
-        notSharedTravels = await userRepository.getNotSharedTravelsByUser("xotoF1gCuOdGMxgRUX7moQrsbjC2");
+        notSharedTravels = await userRepository.getNotSharedTravelsByUser(currentUser.idUser);
       } catch (e) {
         print("Error loading not shared travels: $e");
       } finally {
@@ -33,7 +33,7 @@ class TravelViewModel extends BaseViewModel {
   Future<void> loadSharedTravels() async {
     try {
       setLoading(true);
-      sharedTravels = await travelRepository.getSharedTravels("xotoF1gCuOdGMxgRUX7moQrsbjC2");
+      sharedTravels = await travelRepository.getSharedTravels(currentUser.idUser);
     } catch (e) {
       print("Error loading shared travels, $e");
     } finally {
