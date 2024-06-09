@@ -1,12 +1,13 @@
 import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 import 'package:ai_travel_planner/ui/dashboard/dashboard_view.dart';
-import 'package:ai_travel_planner/ui/login_view.dart';
 import 'package:ai_travel_planner/ui/profile/profile_view.dart';
+import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ai_travel_planner/data/repository/travel/travel_repository.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ Future<void> main() async {
     persistenceEnabled: true,
   );
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,13 +26,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (_) => TravelViewModel(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
+          useMaterial3: true,
+        ),
+        home: Consumer<TravelViewModel>(
+          builder: (context, travelViewModel, child) {
+            return DashboardFragment(travelViewModel);
+          },
+        ),
       ),
-      home: const ProfileFragment(),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/ui/components/travel_card.dart';
 import 'package:ai_travel_planner/assets/CustomColors.dart';
 
+import '../../data/model/user_model.dart';
 import '../Travel/travel_details.dart';
 
 class ProfileFragment extends StatelessWidget {

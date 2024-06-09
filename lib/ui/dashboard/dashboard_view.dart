@@ -26,34 +26,40 @@ class DashboardFragment extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final travel = viewModel.filteredTravels[index];
                     return GestureDetector(
-                        onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TravelDetailsFragment(viewModel, travel),
-                        ),
-                      );
-                    },
-                    child: FutureBuilder<User?>(
-                      future: viewModel.getOwnerUser(travel),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text('Error loading user');
-                        } else {
-                          return TravelCard(
-                            bottomMargin: index == viewModel.filteredTravels.length - 1 ? 120 : 10,
-                            travel: travel,
-                            user: null,
-                            ownerUser: snapshot.data,
-                            onLikeTap: () {
-                              viewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
-                            },
-                            showOwnerName: true,
-                            showLikes: true,
-                          );
-                        }
+                      onTap: () async {
+                        User? ownerUser = await viewModel.getOwnerUser(travel);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TravelDetailsFragment(
+                                travel: travel,
+                                travelViewModel: travelViewModel,
+                                ownerUser: ownerUser,
+                                view: "dashboard"
+                            ),
+                          ),
+                        );
                       },
-                    ),
+                      child: FutureBuilder<User?>(
+                        future: viewModel.getOwnerUser(travel),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return const Text('Error loading user');
+                          } else {
+                            return TravelCard(
+                              bottomMargin: index == viewModel.filteredTravels.length - 1 ? 120 : 10,
+                              travel: travel,
+                              user: null,
+                              ownerUser: snapshot.data,
+                              onLikeTap: () {
+                                viewModel.toggleLikeStatus(travel, "xotoF1gCuOdGMxgRUX7moQrsbjC2");
+                              },
+                              showOwnerName: true,
+                              showLikes: true,
+                            );
+                          }
+                        },
+                      ),
                     );
                   },
                 ),
