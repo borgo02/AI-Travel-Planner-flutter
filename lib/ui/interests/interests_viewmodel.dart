@@ -1,5 +1,4 @@
 import 'package:ai_travel_planner/base_viewmodel.dart';
-import 'package:ai_travel_planner/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class InterestsViewModel extends BaseViewModel {
@@ -43,9 +42,11 @@ class InterestsViewModel extends BaseViewModel {
       'shopping': shoppingValue,
     };
 
+    print("Ciao: ${currentUser.idUser}");
+
     currentUser.interests = interestEntity;
     currentUser.isInitialized = true;
-    await userRepository.updateUser(currentUser as User);
+    await userRepository.updateUser(currentUser);
 
     //Navigator.of(context).pop();
   }

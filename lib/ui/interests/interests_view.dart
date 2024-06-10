@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../data/model/user_model.dart' as auth;
+import '../bottom_navigation_view.dart';
 import '../components/interest.dart';
 import 'interests_viewmodel.dart';
 
@@ -73,7 +75,13 @@ class InterestsView extends StatelessWidget {
             ),
             // Add more InterestComponents for other interests here
             ElevatedButton(
-              onPressed: viewModel.confirmClicked,
+              onPressed: () {
+                viewModel.confirmClicked();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainPage(viewModel.currentUser)),
+                );
+              },
               child: const Text('Confirm'),
             ),
           ],

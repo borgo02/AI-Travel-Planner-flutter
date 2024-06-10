@@ -1,9 +1,10 @@
+import 'package:ai_travel_planner/data/repository/Travel/travel_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_travel_planner/data/model/user_model.dart';
-import 'data/repository/User/user_repository.dart';
-
+import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 
 class BaseViewModel extends ChangeNotifier {
+  final TravelRepository travelRepository = TravelRepository();
   final UserRepository userRepository = UserRepository();
   late User currentUser;
   bool _isLoading = false;
@@ -20,6 +21,20 @@ class BaseViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> initializeCurrentUser() async {
+    try {
+      currentUser = await userRepository.getUser();
+      if (currentUser == null) {
+        // Handle the case when currentUser is null, maybe navigate to login or show an error
+        print("Error: currentUser is null");
+      } else {
+        notifyListeners();
+      }
+    } catch (e) {
+      print("Error loading user: $e");
+    }
+  }
+
   Future<void> executeWithLoading(Future<void> Function() block) async {
     setLoading(true);
 
@@ -33,7 +48,7 @@ class BaseViewModel extends ChangeNotifier {
   }
 
   void checkIfUserHaveInterest() {
-    if (!currentUser.isInitialized) {
+    if (currentUser == null || !currentUser!.isInitialized) {
       goToInterestFragment();
     }
   }
