@@ -1,14 +1,12 @@
 import 'dart:ui';
-
-import 'package:ai_travel_planner/CustomColors.dart';
 import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 import 'package:ai_travel_planner/ui/bottom_navigation_view.dart';
 import 'package:ai_travel_planner/ui/interests/interests_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../assets/CustomColors.dart';
 import 'interests/interests_view.dart';
 
 class LoginActivity extends StatefulWidget {
@@ -20,6 +18,7 @@ class LoginActivity extends StatefulWidget {
 }
 
 class _LoginActivityState extends State<LoginActivity> {
+  final InterestsViewModel interestsViewModel = InterestsViewModel();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   var userRepository = UserRepository();
@@ -111,7 +110,7 @@ class _LoginActivityState extends State<LoginActivity> {
     else
     {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
+        MaterialPageRoute(builder: (context) => InterestsView(interestsViewModel)),
       );
     }
   }
