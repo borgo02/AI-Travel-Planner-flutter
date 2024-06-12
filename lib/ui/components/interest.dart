@@ -19,6 +19,7 @@ class InterestComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.all(8),
       elevation: 3,
       shape: RoundedRectangleBorder(

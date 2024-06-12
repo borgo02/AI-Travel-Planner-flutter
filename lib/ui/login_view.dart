@@ -1,22 +1,24 @@
+import 'dart:ui';
 import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
+import 'package:ai_travel_planner/ui/bottom_navigation_view.dart';
 import 'package:ai_travel_planner/ui/interests/interests_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../assets/CustomColors.dart';
 import 'interests/interests_view.dart';
 
 class LoginActivity extends StatefulWidget {
-  final String title;
 
-  const LoginActivity({super.key, required this.title});
+  const LoginActivity({super.key});
 
   @override
   _LoginActivityState createState() => _LoginActivityState();
 }
 
 class _LoginActivityState extends State<LoginActivity> {
+  final InterestsViewModel interestsViewModel = InterestsViewModel();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   var userRepository = UserRepository();
@@ -28,44 +30,38 @@ class _LoginActivityState extends State<LoginActivity> {
     super.initState();
 
     if (_auth.currentUser != null)
-      {
-        setState(() {
-          isLoading = true;
-        });
-        _handleLoginNavigation(_auth.currentUser!);
-        setState(() {
-          isLoading = false;
-        });
-      }
+    {
+      setState(() {
+        isLoading = true;
+      });
+      _handleLoginNavigation(_auth.currentUser!);
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Login Text',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton.icon(
-              onPressed: () async {
-                await _signInWithGoogle();
-              },
-              icon: Icon(Icons.account_circle),
-              label: Text('Sign in with Google'),
-            ),
-            SizedBox(height: 20),
-            if (isLoading) CircularProgressIndicator(),
-          ],
+    return Expanded(
+        child: Container(
+          decoration: const BoxDecoration(color: CustomColors.darkBlue),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Bentornato!", style: TextStyle(fontSize: 35.0, decoration: TextDecoration.none, color: Colors.white)),
+              const SizedBox(height: 40.0),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  await _signInWithGoogle();
+                },
+                icon: const Icon(Icons.account_circle, color: CustomColors.darkBlue,),
+                label: const Text('Accedi con Google', style: TextStyle( color: CustomColors.darkBlue),),
+              ),
+              if (isLoading) const CircularProgressIndicator(),
+            ],
+          ),
         ),
-      ),
     );
   }
 
@@ -92,10 +88,9 @@ class _LoginActivityState extends State<LoginActivity> {
       setState(() {
         isLoading = false;
       });
-      print(error);
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Authentication failed. Please try again.'),
         ),
       );
@@ -109,13 +104,13 @@ class _LoginActivityState extends State<LoginActivity> {
     if (dbUser!.isInitialized)
     {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
+        MaterialPageRoute(builder: (context) => MainPage(dbUser)),
       );
     }
     else
     {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
+        MaterialPageRoute(builder: (context) => InterestsView(interestsViewModel)),
       );
     }
   }
@@ -130,11 +125,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Main Screen'),
-      ),
       body: Center(
-        child: Text('Welcome, ${user?.displayName}'),
+        child: Text('Benvenuto, ${user?.displayName}'),
       ),
     );
   }

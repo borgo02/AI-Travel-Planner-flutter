@@ -1,5 +1,4 @@
 import 'package:ai_travel_planner/base_viewmodel.dart';
-import 'package:ai_travel_planner/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class InterestsViewModel extends BaseViewModel {
@@ -12,25 +11,46 @@ class InterestsViewModel extends BaseViewModel {
   final _shoppingValue = ValueNotifier<double>(5.0);
 
   double get storyValue => _storyValue.value;
-  set storyValue(double value) => _storyValue.value = value;
+  set storyValue(double value) {
+    _storyValue.value = value;
+    notifyListeners();
+  }
 
   double get artValue => _artValue.value;
-  set artValue(double value) => _artValue.value = value;
+  set artValue(double value){
+    _artValue.value = value;
+    notifyListeners();
+  }
 
   double get partyValue => _partyValue.value;
-  set partyValue(double value) => _partyValue.value = value;
+  set partyValue(double value){
+    _partyValue.value = value;
+    notifyListeners();
+  }
 
   double get natureValue => _natureValue.value;
-  set natureValue(double value) => _natureValue.value = value;
+  set natureValue(double value){
+    _natureValue.value = value;
+    notifyListeners();
+  }
 
   double get entertainmentValue => _entertainmentValue.value;
-  set entertainmentValue(double value) => _entertainmentValue.value = value;
+  set entertainmentValue(double value){
+    _entertainmentValue.value = value;
+    notifyListeners();
+  }
 
   double get sportValue => _sportValue.value;
-  set sportValue(double value) => _sportValue.value = value;
+  set sportValue(double value){
+    _sportValue.value = value;
+    notifyListeners();
+  }
 
   double get shoppingValue => _shoppingValue.value;
-  set shoppingValue(double value) => _shoppingValue.value = value;
+  set shoppingValue(double value){
+    _shoppingValue.value = value;
+    notifyListeners();
+  }
 
   void confirmClicked() async {
     Map<String, double> interestEntity = {
@@ -45,7 +65,7 @@ class InterestsViewModel extends BaseViewModel {
 
     currentUser.interests = interestEntity;
     currentUser.isInitialized = true;
-    await userRepository.updateUser(currentUser as User);
+    await userRepository.updateUser(currentUser);
 
     //Navigator.of(context).pop();
   }

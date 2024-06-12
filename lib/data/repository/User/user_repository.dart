@@ -26,33 +26,31 @@ class UserRepository extends BaseRepository {
   }
 
   Future<void> updateLikedTravelByUser(String idUser, String idTravel, bool isLiked) async {
-    final DocumentReference travelRef = travelsCollectionReference.doc(idTravel);
-    final CollectionReference likedTravelsRef = usersCollectionRef.doc(idUser).collection('likedTravels');
+    transactionHandler(Transaction transaction) async {
+      final DocumentReference travelRef = FirebaseFirestore.instance.collection('travels').doc(idTravel);
+      final CollectionReference likedTravelsRef = FirebaseFirestore.instance.collection('users').doc(idUser).collection('likedTravels');
+      final QuerySnapshot likedTravelQuery = await likedTravelsRef.where('idTravel', isEqualTo: travelRef).get();
 
-    if (isLiked) {
-      final Likes like = Likes(idTravel: travelRef, timestamp: DateTime.now());
-      await db.runTransaction((transaction) async {
-        final snapshot = await transaction.get(travelRef);
-        final newLikesValue = snapshot.get('numberOfLikes') + 1;
-        transaction.update(travelRef, {'numberOfLikes': newLikesValue});
-        likedTravelsRef.add(like.toJson());
-      });
-    } else {
-      final likes = await likedTravelsRef.get();
-      for (final like in likes.docs) {
-        final idLike = like.id;
-        final idTravelReferencePath = like.get('idTravel').path;
-        final idTravelDoc = idTravelReferencePath.split('/').last;
-        if (idTravelDoc == idTravel) {
-          await db.runTransaction((transaction) async {
-            final snapshot = await transaction.get(travelRef);
-            final newLikesValue = snapshot.get('numberOfLikes') - 1;
-            transaction.update(travelRef, {'numberOfLikes': newLikesValue});
-            likedTravelsRef.doc(idLike).delete();
-          });
+      final DocumentSnapshot snapshot = await transaction.get(travelRef);
+      final int currentLikesValue = snapshot.get('numberOfLikes') ?? 0;
+
+      if (isLiked) {
+        if (likedTravelQuery.docs.isEmpty) {
+          final like = Likes(idTravel: travelRef, timestamp: DateTime.now());
+          transaction.update(travelRef, {'numberOfLikes': currentLikesValue + 1});
+          await likedTravelsRef.add(like.toJson());
+        }
+      } else {
+        for (DocumentSnapshot like in likedTravelQuery.docs) {
+          final String idLike = like.id;
+          transaction.update(travelRef, {'numberOfLikes': currentLikesValue - 1});
+          await likedTravelsRef.doc(idLike).delete();
+          break;
         }
       }
     }
+
+    await db.runTransaction(transactionHandler);
   }
 
   Future<List<Travel>> getTravelsByUser(String idUser) async {
@@ -64,7 +62,6 @@ class UserRepository extends BaseRepository {
       final travelData = await travelRepository.getTravelById(travel.id, idUser);
       if (travelData != null) sharedTravelList.add(travelData);
     }
-
     return sharedTravelList;
   }
 
@@ -80,28 +77,31 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getSharedTravelsByUser(String idUser) async {
-    final userRef = usersCollectionRef.doc(idUser);
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).get();
+    final DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(idUser);
+    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: userRef).get();
     final List<Travel> sharedTravelList = [];
 
-    for (final travel in travelRef.docs) {
-      final travelData = await travelRepository.getTravelById(travel.id, idUser);
-      if (travelData != null && travelData.isShared!) sharedTravelList.add(travelData);
+    for (DocumentSnapshot travel in travelRef.docs) {
+      final Travel? travelData = await travelRepository.getTravelById(travel.id, idUser);
+      if (travelData != null && travelData.isShared!) {
+        sharedTravelList.add(travelData);
+      }
     }
-
     return sharedTravelList;
   }
 
   Future<List<Travel>> getNotSharedTravelsByUser(String idUser) async {
-    final userRef = usersCollectionRef.doc(idUser);
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).get();
+    final DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(idUser);
+    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: userRef).get();
     final List<Travel> notSharedTravelList = [];
 
-    for (final travel in travelRef.docs) {
-      final travelData = await travelRepository.getTravelById(travel.id, idUser);
-      if (travelData != null && !travelData.isShared!) notSharedTravelList.add(travelData);
+    for (DocumentSnapshot travel in travelRef.docs) {
+      final Travel? travelData = await travelRepository.getTravelById(travel.id, idUser);
+      print("Travel: $travelData");
+      if (travelData != null && !(travelData.isShared ?? false)) {
+        notSharedTravelList.add(travelData);
+      }
     }
-
     return notSharedTravelList;
   }
 

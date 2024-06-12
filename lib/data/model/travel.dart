@@ -11,7 +11,7 @@ class Travel {
   int? numberOfLikes;
   String? imageUrl;
   List<Stage>? stageList;
-  bool? isLiked;
+  bool isLiked;
 
   Travel({
     this.idTravel,
@@ -23,7 +23,7 @@ class Travel {
     this.numberOfLikes,
     this.imageUrl,
     this.stageList,
-    this.isLiked,
+    required this.isLiked,
   });
 
   factory Travel.fromJson(Map<String, dynamic> json) {
@@ -32,14 +32,14 @@ class Travel {
       idUser: json['idUser'] as String?,
       info: json['info'] as String?,
       name: json['name'] as String?,
-      isShared: json['isShared'] as bool?,
+      isShared: json['shared'] as bool?,
       timestamp: (json['timestamp'] as Timestamp?)?.toDate(),
       numberOfLikes: json['numberOfLikes'] as int?,
       imageUrl: json['imageUrl'] as String?,
       stageList: (json['stages'] as List<dynamic>?)
           ?.map((item) => Stage.fromJson(item as Map<String, dynamic>))
           .toList(),
-      isLiked: json['isLiked'] as bool?,
+      isLiked: json['isLiked'] as bool,
     );
   }
 

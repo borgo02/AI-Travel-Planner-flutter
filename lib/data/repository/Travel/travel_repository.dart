@@ -9,14 +9,19 @@ class TravelRepository extends BaseRepository {
   final CollectionReference travelsCollectionReference = FirebaseFirestore.instance.collection('travels');
 
   Future<void> setTravel(Travel travel) async {
-    await travelsCollectionReference.add(travel.toJson());
+    final documentReference = travelsCollectionReference.doc();
+    travel.idTravel = documentReference.id;
+    await documentReference.set(travel.toJson());
+    travel.stageList?.forEach((stage) {
+      setStageByTravel(travel.idTravel!, stage);
+    });
   }
 
   Future<void> setTravelToShared(String idTravel) async {
     final travelDoc = travelsCollectionReference.doc(idTravel);
     final travelRef = await travelDoc.get();
     if (travelRef.exists) {
-      final newShareData = {'isShared': true};
+      final newShareData = {'shared': true};
       await travelDoc.update(newShareData);
     }
   }
@@ -43,17 +48,17 @@ class TravelRepository extends BaseRepository {
   }
 
   Future<Travel?> getTravelById(String idTravel, String idUser) async {
+    bool isLiked;
     final doc = await travelsCollectionReference.doc(idTravel).get();
     if (doc.exists) {
-      final data = doc.data() as Map<String, dynamic>;
-      final idUserRef = data['idUser'] as DocumentReference;
-      final info = data['info'] as String?;
-      final name = data['name'] as String?;
-      final isShared = data['isShared'] as bool?;
-      final numberOfLikes = data['numberOfLikes'] as int?;
-      final imageUrl = data['imageUrl'] as String?;
-      final timestamp = (data['timestamp'] as Timestamp?)?.toDate();
-      final isLiked = await isTravelLikedByUser(idTravel, idUser);
+      final idUserRef = doc.get('idUser') as DocumentReference;
+      final info = doc.get('info') as String?;
+      final name = doc.get('name') as String?;
+      final isShared = doc.get('shared') as bool?;
+      final numberOfLikes = doc.get('numberOfLikes')?.toInt();
+      final imageUrl = doc.get('imageUrl') as String?;
+      final timestamp = (doc.get('timestamp') as Timestamp?)?.toDate();
+      isLiked = idUser.isNotEmpty ? await isTravelLikedByUser(idTravel, idUser) : false;
       final stages = await getStagesByTravel(idTravel);
       return Travel(
         idTravel: idTravel,
@@ -67,8 +72,22 @@ class TravelRepository extends BaseRepository {
         stageList: stages,
         isLiked: isLiked,
       );
+    } else {
+      return null;
     }
-    return null;
+  }
+
+  Future<List<Travel>> getTravels() async {
+    final travelsDoc = await travelsCollectionReference.get();
+    final List<Travel> travelList = [];
+    for (final doc in travelsDoc.docs) {
+      final idTravel = doc.id;
+      final travelData = await getTravelById(idTravel, "");
+      if (travelData != null) {
+        travelList.add(travelData);
+      }
+    }
+    return travelList;
   }
 
   Future<List<Stage>> getStagesByTravel(String idTravel) async {
@@ -105,15 +124,32 @@ class TravelRepository extends BaseRepository {
     return travelList;
   }
 
-  Future<bool> isTravelLikedByUser(String idTravel, String idUser) async {
-    final likesRef = await usersCollectionRef.doc(idUser).collection('likedTravels').get();
-    for (final like in likesRef.docs) {
-      final idTravelRefPath = like.data()['idTravel'] as DocumentReference;
-      final idTravelDoc = idTravelRefPath.id;
-      if (idTravelDoc == idTravel) {
-        return true;
+  Future<List<Stage>> getFilteredStagesByCity(String filter, String city) async {
+    final travels = await getTravels();
+    final List<Stage> stageList = [];
+    for (final travel in travels) {
+      final stages = await getStagesByTravel(travel.idTravel!);
+      for (final stage in stages) {
+        if (stage.city.toLowerCase() == city.toLowerCase() &&
+            filter.toLowerCase().contains(stage.name.toLowerCase())) {
+          stageList.add(stage);
+        }
       }
     }
-    return false;
+    return stageList;
+  }
+
+  Future<bool> isTravelLikedByUser(String idTravel, String idUser) async {
+    final likesRef = await usersCollectionRef.doc(idUser).collection("likedTravels").get();
+    bool isTravelLiked = false;
+    for (final like in likesRef.docs) {
+      final idTravelReferencePath = like.get("idTravel")!.path;
+      final idTravelDoc = idTravelReferencePath.split("/").last;
+      if (idTravelDoc == idTravel) {
+        isTravelLiked = true;
+        break;
+      }
+    }
+    return isTravelLiked;
   }
 }
