@@ -1,4 +1,3 @@
-import 'package:ai_travel_planner/CustomColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as slider;
 import 'package:flutter_svg/flutter_svg.dart';
