@@ -23,9 +23,10 @@ List<String> navTitles = [
   'Profile',
 ];
 
-int selectedIndex = 0;
+
 
 class _MainPageState extends State<MainPage> {
+  int selectedIndex = 0;
   static final travelViewModel = TravelViewModel();
   TextEditingController searchController = TextEditingController();
 
