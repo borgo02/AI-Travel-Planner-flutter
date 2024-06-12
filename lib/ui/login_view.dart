@@ -42,39 +42,39 @@ class _LoginActivityState extends State<LoginActivity> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(color: CustomColors.darkBlue),
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Bentornato!",
-                    style: TextStyle(
-                      fontSize: 35.0,
-                      decoration: TextDecoration.none,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 40.0),
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      await _signInWithGoogle();
-                    },
-                    icon: const Icon(
-                      Icons.account_circle,
-                      color: CustomColors.darkBlue,
-                    ),
-                    label: const Text(
-                      'Accedi con Google',
-                      style: TextStyle(color: CustomColors.darkBlue),
-                    ),
-                  ),
-                  if (isLoading) const CircularProgressIndicator(),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Bentornato!",
+                style: TextStyle(
+                  fontSize: 35.0,
+                  decoration: TextDecoration.none,
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 40.0),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    await _signInWithGoogle();
+                  },
+                  icon: const Icon(
+                    Icons.account_circle,
+                    color: CustomColors.darkBlue,
+                  ),
+                  label: const Text(
+                    'Accedi con Google',
+                    style: TextStyle(color: CustomColors.darkBlue),
+                  ),
+                ),
+              ),
+              if (isLoading) const CircularProgressIndicator(),
+            ],
+          ),
         ),
       ),
     );
@@ -103,7 +103,6 @@ class _LoginActivityState extends State<LoginActivity> {
       setState(() {
         isLoading = false;
       });
-      // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Authentication failed. Please try again.'),
@@ -115,16 +114,16 @@ class _LoginActivityState extends State<LoginActivity> {
   Future<void> _handleLoginNavigation(User user) async {
     var dbUser = await userRepository.getUserById(idUser: user.uid, isCurrentUser: true);
 
-    if (dbUser!.isInitialized) {
+    /*if (dbUser!.isInitialized) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => MainPage(dbUser)),
-      );
-    } else {
+      );*/
+    //} else {
       final InterestsViewModel interestsViewModel = InterestsViewModel();
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => InterestsView(interestsViewModel)),
       );
-    }
+    //}
   }
 }
 
