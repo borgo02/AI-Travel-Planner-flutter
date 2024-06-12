@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../model/likes.dart';
 import '../../model/travel.dart';
 import '../../model/user_model.dart';

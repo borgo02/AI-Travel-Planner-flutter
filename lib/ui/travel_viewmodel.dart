@@ -1,7 +1,6 @@
 import 'package:ai_travel_planner/base_viewmodel.dart';
 import 'package:ai_travel_planner/data/model/stage.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
-
 import '../data/model/user_model.dart';
 
 
