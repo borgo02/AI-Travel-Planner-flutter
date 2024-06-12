@@ -1,71 +1,70 @@
+import 'package:ai_travel_planner/ui/travel/travel_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ai_travel_planner/CustomColors.dart';
-import 'package:ai_travel_planner/data/repository/travel/travel_repository.dart';
-import 'package:ai_travel_planner/ui/dashboard/dashboard_viewmodel.dart';
+import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
+import '../../data/model/user_model.dart';
 import '../components/travel_card.dart';
-import 'dashboard_viewmodel.dart';
 
-class DashboardPage extends StatelessWidget {
-  final TravelRepository travelRepository;
-
-  const DashboardPage({super.key, required this.travelRepository});
+class DashboardFragment extends StatelessWidget {
+  final TravelViewModel travelViewModel;
+  const DashboardFragment(this.travelViewModel,{super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DashboardViewModel(travelRepository: travelRepository)..loadTravels("xotoF1gCuOdGMxgRUX7moQrsbjC2"),
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: kToolbarHeight,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          flexibleSpace: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Cerca viaggio',
-                      prefixIcon: const Icon(Icons.search),
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 2.0,
-                        horizontal: 10.0,
-                      ),
-                    ),
-                    style: const TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        body: Consumer<DashboardViewModel>(
+    return ChangeNotifierProvider<TravelViewModel>.value(
+      value: travelViewModel,
+      child: Consumer<TravelViewModel>(
           builder: (context, viewModel, child) {
             return Center(
               child: viewModel.isLoading
                   ? const CircularProgressIndicator()
                   : Container(
-                padding: const EdgeInsets.all(0.0),
-                color: CustomColors.lightBlue,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: ListView.builder(
-                  itemCount: viewModel.travels.length,
+                  itemCount: viewModel.filteredTravels.length,
                   itemBuilder: (context, index) {
-                    return TravelCard(travel: viewModel.travels[index]);
+                    final travel = viewModel.filteredTravels[index];
+                    return GestureDetector(
+                      onTap: () async {
+                        User? ownerUser = await viewModel.getOwnerUser(travel);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TravelDetailsFragment(
+                                travel: travel,
+                                travelViewModel: travelViewModel,
+                                ownerUser: ownerUser,
+                                view: "dashboard"
+                            ),
+                          ),
+                        );
+                      },
+                      child: FutureBuilder<User?>(
+                        future: viewModel.getOwnerUser(travel),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return const Text('Error loading user');
+                          } else {
+                            return TravelCard(
+                              bottomMargin: index == viewModel.filteredTravels.length - 1 ? 120 : 10,
+                              travel: travel,
+                              user: null,
+                              ownerUser: snapshot.data,
+                              onLikeTap: () {
+                                viewModel.toggleLikeStatus(travel, viewModel.currentUser.idUser);
+                              },
+                              showOwnerName: true,
+                              showLikes: true,
+                            );
+                          }
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
             );
           },
-        ),
       ),
     );
   }

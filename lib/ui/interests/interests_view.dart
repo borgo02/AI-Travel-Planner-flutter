@@ -1,6 +1,7 @@
-import 'package:ai_travel_planner/CustomColors.dart';
 import 'package:flutter/material.dart';
-
+import '../../data/model/user_model.dart' as auth;
+import '../bottom_navigation_view.dart';
+import '../../assets/CustomColors.dart';
 import '../components/interest.dart';
 import 'interests_viewmodel.dart';
 
@@ -82,7 +83,13 @@ class InterestsView extends StatelessWidget {
               SizedBox(
                 height: 60.0, // Adjust this value to your desired height
                   child: ElevatedButton(
-                    onPressed: viewModel.confirmClicked,
+                    onPressed: () {
+                      viewModel.confirmClicked();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainPage(viewModel.currentUser)),
+                      );
+                    },
                     style: ElevatedButton.styleFrom( backgroundColor: CustomColors.darkBlue),
                     child: const Text('Conferma', style: TextStyle(color: Colors.white, fontSize: 18.0),),
                   ),

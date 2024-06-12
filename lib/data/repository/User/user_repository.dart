@@ -97,6 +97,7 @@ class UserRepository extends BaseRepository {
 
     for (DocumentSnapshot travel in travelRef.docs) {
       final Travel? travelData = await travelRepository.getTravelById(travel.id, idUser);
+      print("Travel: $travelData");
       if (travelData != null && !(travelData.isShared ?? false)) {
         notSharedTravelList.add(travelData);
       }

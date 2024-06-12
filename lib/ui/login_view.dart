@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:ai_travel_planner/CustomColors.dart';
 import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
+import 'package:ai_travel_planner/ui/bottom_navigation_view.dart';
 import 'package:ai_travel_planner/ui/interests/interests_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,15 +31,15 @@ class _LoginActivityState extends State<LoginActivity> {
     super.initState();
 
     if (_auth.currentUser != null)
-      {
-        setState(() {
-          isLoading = true;
-        });
-        _handleLoginNavigation(_auth.currentUser!);
-        setState(() {
-          isLoading = false;
-        });
-      }
+    {
+      setState(() {
+        isLoading = true;
+      });
+      _handleLoginNavigation(_auth.currentUser!);
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -104,7 +105,7 @@ class _LoginActivityState extends State<LoginActivity> {
     if (dbUser!.isInitialized)
     {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => InterestsView(viewModel: InterestsViewModel(),)),
+        MaterialPageRoute(builder: (context) => MainPage(dbUser)),
       );
     }
     else
