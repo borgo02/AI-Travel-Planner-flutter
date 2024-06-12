@@ -110,7 +110,7 @@ class _LoginActivityState extends State<LoginActivity> {
     else
     {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => InterestsView(interestsViewModel)),
+        MaterialPageRoute(builder: (context) => InterestsView(viewModel: interestsViewModel,)),
       );
     }
   }
