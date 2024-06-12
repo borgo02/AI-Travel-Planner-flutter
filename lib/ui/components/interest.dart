@@ -1,3 +1,4 @@
+import 'package:ai_travel_planner/CustomColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as slider;
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,6 +20,7 @@ class InterestComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.all(8),
       elevation: 3,
       shape: RoundedRectangleBorder(
