@@ -152,8 +152,7 @@ class UserRepository extends BaseRepository {
   Future<User?> getUserByTravel(String idTravel) async {
     final travelRef = await travelsCollectionReference.doc(idTravel).get();
     if (travelRef.exists) {
-      final idUserReferencePath = travelRef.get('idUser').path;
-      final idUser = idUserReferencePath.split('/').last;
+      final idUser = travelRef.get('idUser');
       final userRef = await db.collection('users').doc(idUser).get();
       if (userRef.exists) return getUserById(idUser: idUser);
     }
