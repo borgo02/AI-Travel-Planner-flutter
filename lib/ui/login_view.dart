@@ -3,6 +3,7 @@ import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 import 'package:ai_travel_planner/ui/bottom_navigation_view.dart';
 import 'package:ai_travel_planner/ui/interests/interests_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../assets/CustomColors.dart';
@@ -114,16 +115,16 @@ class _LoginActivityState extends State<LoginActivity> {
   Future<void> _handleLoginNavigation(User user) async {
     var dbUser = await userRepository.getUserById(idUser: user.uid, isCurrentUser: true);
 
-    /*if (dbUser!.isInitialized) {
+    if (dbUser!.isInitialized) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => MainPage(dbUser)),
-      );*/
-    //} else {
+      );
+    } else {
       final InterestsViewModel interestsViewModel = InterestsViewModel();
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => InterestsView(viewModel: interestsViewModel,)),
+        MaterialPageRoute(builder: (context) => InterestsView(interestsViewModel)),
       );
-    //}
+    }
   }
 }
 

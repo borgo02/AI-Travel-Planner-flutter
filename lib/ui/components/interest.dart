@@ -1,7 +1,8 @@
+import 'package:ai_travel_planner/assets/CustomColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as slider;
 import 'package:flutter_svg/flutter_svg.dart';
-
+import '../../assets/CustomColors.dart';
 
 class InterestComponent extends StatelessWidget {
   final String imageSrc;
@@ -35,9 +36,9 @@ class InterestComponent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
-                    imageSrc, // Replace 'assets/image.svg' with the path to your SVG file
-                    height: 39,
-                    width: 39,
+                    imageSrc,
+                    height: 30,
+                    width: 30,
                   ),
                 ),
                 Text(
@@ -56,6 +57,8 @@ class InterestComponent extends StatelessWidget {
               divisions: 20,
               onChanged: onSliderChanged,
               label: sliderValue.toString(),
+              activeColor: CustomColors.darkBlue,
+              inactiveColor: CustomColors.lightBlue,
             ),
           ],
         ),

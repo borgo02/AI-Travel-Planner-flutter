@@ -1,9 +1,13 @@
+import 'package:ai_travel_planner/ui/bottom_navigation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ai_travel_planner/ui/travel_viewmodel.dart';
 import 'package:ai_travel_planner/ui/components/travel_card.dart';
 import 'package:ai_travel_planner/assets/CustomColors.dart';
 import 'package:ai_travel_planner/ui/travel/travel_details.dart';
+
+import '../../main.dart';
+import '../login_view.dart';
 
 class ProfileFragment extends StatelessWidget {
   final TravelViewModel travelViewModel;
@@ -43,18 +47,30 @@ class ProfileFragment extends StatelessWidget {
                         ),
                       ),
                       Spacer(),
-                      Row(
-                        children: [
-                          Icon(Icons.logout),
-                          SizedBox(width: 10.0),
-                          Text(
-                            'Logout',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
+                      GestureDetector(
+                        onTap: () {
+                          travelViewModel.signOut();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyApp(),
                             ),
-                          ),
-                        ],
+                                (route)=>false,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                              Icon(Icons.logout),
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Logout',
+                                style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

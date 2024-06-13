@@ -1,8 +1,10 @@
 import 'package:ai_travel_planner/base_viewmodel.dart';
 import 'package:ai_travel_planner/data/model/stage.dart';
 import 'package:ai_travel_planner/data/model/travel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-import '../data/model/user_model.dart';
+import '../data/model/user_model.dart' as PushaPaolo;
 
 
 class TravelViewModel extends BaseViewModel {
@@ -85,7 +87,12 @@ class TravelViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<User?> getOwnerUser(Travel travel){
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().disconnect();
+  }
+
+  Future<PushaPaolo.User?> getOwnerUser(Travel travel){
     return userRepository.getUserByTravel(travel.idTravel!);
   }
 
