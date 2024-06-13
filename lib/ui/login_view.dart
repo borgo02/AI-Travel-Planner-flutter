@@ -3,11 +3,12 @@ import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 import 'package:ai_travel_planner/ui/bottom_navigation_view.dart';
 import 'package:ai_travel_planner/ui/interests/interests_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../assets/CustomColors.dart';
 import 'interests/interests_view.dart';
+import '../data/model/user_model.dart' as PushaPaolo;
+
 
 class LoginActivity extends StatefulWidget {
   const LoginActivity({super.key});
@@ -115,12 +116,25 @@ class _LoginActivityState extends State<LoginActivity> {
   Future<void> _handleLoginNavigation(User user) async {
     var dbUser = await userRepository.getUserById(idUser: user.uid, isCurrentUser: true);
 
-    if (dbUser!.isInitialized) {
+    if (dbUser != null && dbUser.isInitialized) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => MainPage(dbUser)),
+        MaterialPageRoute(builder: (context) => MainPage(dbUser!)),
       );
     } else {
+      if (dbUser == null)
+        {
+          dbUser = PushaPaolo.User(
+            idUser: user.uid,
+            email: user.email!,
+            fullname: user.displayName!,
+            isInitialized: false,
+            interests: null,
+            likedTravels: null,
+          );
+          await userRepository.updateUser(dbUser);
+        }
       final InterestsViewModel interestsViewModel = InterestsViewModel();
+
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => InterestsView(interestsViewModel)),
       );
