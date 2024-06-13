@@ -54,8 +54,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getTravelsByUser(String idUser) async {
-    final userRef = usersCollectionRef.doc(idUser);
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).get();
+    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: idUser).get();
     final List<Travel> sharedTravelList = [];
 
     for (final travel in travelRef.docs) {
@@ -77,8 +76,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getSharedTravelsByUser(String idUser) async {
-    final DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(idUser);
-    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: userRef).get();
+    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: idUser).get();
     final List<Travel> sharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
@@ -91,8 +89,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getNotSharedTravelsByUser(String idUser) async {
-    final DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(idUser);
-    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: userRef).get();
+    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: idUser).get();
     final List<Travel> notSharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
@@ -153,8 +150,7 @@ class UserRepository extends BaseRepository {
   Future<User?> getUserByTravel(String idTravel) async {
     final travelRef = await travelsCollectionReference.doc(idTravel).get();
     if (travelRef.exists) {
-      final idUserReferencePath = travelRef.get('idUser').path;
-      final idUser = idUserReferencePath.split('/').last;
+      final idUser = travelRef.get('idUser');
       final userRef = await db.collection('users').doc(idUser).get();
       if (userRef.exists) return getUserById(idUser: idUser);
     }
