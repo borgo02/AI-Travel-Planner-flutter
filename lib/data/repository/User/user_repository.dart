@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../model/likes.dart';
 import '../../model/travel.dart';
 import '../../model/user_model.dart';
@@ -53,7 +54,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getTravelsByUser(String idUser) async {
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: idUser).orderBy("timestamp", descending: true).get();
+    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: idUser).get();
     final List<Travel> sharedTravelList = [];
 
     for (final travel in travelRef.docs) {
@@ -75,7 +76,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getSharedTravelsByUser(String idUser) async {
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: idUser).orderBy("timestamp", descending: true).get();
+    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: idUser).get();
     final List<Travel> sharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
@@ -88,7 +89,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getNotSharedTravelsByUser(String idUser) async {
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: idUser ).orderBy("timestamp", descending: true).get();
+    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: idUser).get();
     final List<Travel> notSharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
