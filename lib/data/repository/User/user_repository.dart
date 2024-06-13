@@ -75,7 +75,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getSharedTravelsByUser(String idUser) async {
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).orderBy("timestamp", descending: true).get();
+    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: idUser).orderBy("timestamp", descending: true).get();
     final List<Travel> sharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
@@ -88,7 +88,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<Travel>> getNotSharedTravelsByUser(String idUser) async {
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).orderBy("timestamp", descending: true).get();
+    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: idUser ).orderBy("timestamp", descending: true).get();
     final List<Travel> notSharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
