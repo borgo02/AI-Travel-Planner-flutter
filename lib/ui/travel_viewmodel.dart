@@ -14,8 +14,12 @@ class TravelViewModel extends BaseViewModel {
   String searchText = "";
 
   TravelViewModel(){
-    loadNotSharedTravels();
-    loadSharedTravels();
+    initialization();
+  }
+
+  void initialization() async {
+    await loadNotSharedTravels();
+    await loadSharedTravels();
   }
 
   Future<void> loadNotSharedTravels() async {
