@@ -54,7 +54,7 @@ class UserRepository extends BaseRepository {
 
   Future<List<Travel>> getTravelsByUser(String idUser) async {
     final userRef = usersCollectionRef.doc(idUser);
-    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).get();
+    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).orderBy("timestano", descending: true).get();
     final List<Travel> sharedTravelList = [];
 
     for (final travel in travelRef.docs) {
@@ -77,7 +77,7 @@ class UserRepository extends BaseRepository {
 
   Future<List<Travel>> getSharedTravelsByUser(String idUser) async {
     final DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(idUser);
-    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: userRef).get();
+    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).orderBy("timestano", descending: true).get();
     final List<Travel> sharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
@@ -91,7 +91,7 @@ class UserRepository extends BaseRepository {
 
   Future<List<Travel>> getNotSharedTravelsByUser(String idUser) async {
     final DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(idUser);
-    final QuerySnapshot travelRef = await FirebaseFirestore.instance.collection('travels').where('idUser', isEqualTo: userRef).get();
+    final travelRef = await travelsCollectionReference.where('idUser', isEqualTo: userRef).orderBy("timestano", descending: true).get();
     final List<Travel> notSharedTravelList = [];
 
     for (DocumentSnapshot travel in travelRef.docs) {
