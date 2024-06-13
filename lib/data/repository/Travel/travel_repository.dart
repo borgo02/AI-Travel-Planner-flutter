@@ -51,7 +51,7 @@ class TravelRepository extends BaseRepository {
     bool isLiked;
     final doc = await travelsCollectionReference.doc(idTravel).get();
     if (doc.exists) {
-      final idUserRef = doc.get('idUser') as DocumentReference;
+      final idUserRef = doc.get('idUser') as String;
       final info = doc.get('info') as String?;
       final name = doc.get('name') as String?;
       final isShared = doc.get('shared') as bool?;
@@ -62,7 +62,7 @@ class TravelRepository extends BaseRepository {
       final stages = await getStagesByTravel(idTravel);
       return Travel(
         idTravel: idTravel,
-        idUser: idUserRef.id,
+        idUser: idUserRef,
         info: info,
         name: name,
         isShared: isShared,

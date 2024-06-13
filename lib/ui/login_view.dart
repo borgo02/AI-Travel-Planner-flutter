@@ -3,6 +3,7 @@ import 'package:ai_travel_planner/data/repository/User/user_repository.dart';
 import 'package:ai_travel_planner/ui/bottom_navigation_view.dart';
 import 'package:ai_travel_planner/ui/interests/interests_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../assets/CustomColors.dart';
